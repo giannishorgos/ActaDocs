@@ -13,6 +13,11 @@ sudo passwd <username>
 ```bash
 sudo usermod -aG wheel <username> 
 ```
+- Decompress Backup Users
+```bash
+sudo gzip -d <username>.tar.gz
+sudo tar -xvf <username>.tar -C /opt/os_backup/users_backup/
+```
 - Copy the old home directory of the user to the directory:
 ```bash
 sudo cp -r /opt/os_backup/users_backup/home/<username>/. /home/<username>/
@@ -38,27 +43,28 @@ def make_sudoer(username):
     # Step 3: Make it sudoer
     subprocess.run(["sudo", "usermod", "-aG", "wheel", username])
 
+def decompress_backup(username):
+    # Step 4: Decompress Backup
+    subprocess.run(["sudo", "gzip", "-d", f"/opt/os_backup/users_backup/{username}.tar.gz"])
+    subprocess.run(["sudo", "tar", "-xvf", f"/opt/os_backup/users_backup/{username}.tar", "-C", "/opt/os_backup/users_backup/"])
+
 def copy_home_directory(username):
-    # Step 4: Copy old home directory
+    # Step 5: Copy old home directory
     subprocess.run(["sudo", "cp", "-r", f"/opt/os_backup/users_backup/home/{username}/.", f"/home/{username}/"])
 
 def change_directory_permission(username):
-    # Step 5: Change permission of directory
+    # Step 6: Change permission of directory
     subprocess.run(["sudo", "chown", "-R", f"{username}:{username}", f"/home/{username}/"])
 
-def decompress_backup(username):
-    # Step 6: Decompress Backup
-    subprocess.run(["sudo", "gzip", "-d", f"/opt/os_backup/users_backup/{username}.tar.gz"])
-    subprocess.run(["sudo", "tar", "-xvf", f"/opt/os_backup/users_backup/{username}.tar"])
 
 def main():
-    # Input: Get username and full name
+    # Get username and full name
     username = input("Enter username: ")
     full_name = input("Enter full name: ")
 
     # Execute steps
     create_user(username, full_name)
-    # set_password(username)
+    set_password(username)
     make_sudoer(username)
     decompress_backup(username)
     copy_home_directory(username)
