@@ -4,6 +4,7 @@ Welcome to ***Acta Tasks and Issues*** documentation. This version is still in i
 ## Table of Contents
 - [Database and Periodic Inform Distribution](#database-and-periodic-inform)
 - [AXESS - Multi Tenancy](#axess---multi-tenancy)
+<br/><br/>  
 # Database and periodic inform
 
 Η mysql τρέχει στον DB01/DB02 (ip1, ip2), sto chroot /opt/mysql5.7
@@ -27,7 +28,8 @@ def pit_uniform_distribution():
   periodic_inform_time = ({'hours':hours}, {'minute' : minutes}, {'seconds':seconds})
   return periodic_inform_time
 ```
-## AXESS - Multi Tenancy
+<br/><br/>
+# AXESS - Multi Tenancy
 
 #### Step 1: Define the tenancy matrix
 Let's say we have two tenants with names amazing and fantastic, respectively.
